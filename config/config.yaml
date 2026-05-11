@@ -350,12 +350,12 @@ display:
   # 注意：区域需同时满足两个条件才会显示：
   #   1. 在此列表中
   #   2. 下方 regions 中对应开关为 true
-  region_order:
+  region_order:    
+    - ai_analysis                         # 5️⃣ AI 分析区域
     - new_items                           # 1️⃣ 新增热点区域
     - hotlist                             # 2️⃣ 热榜区域（关键词匹配 / AI 智能筛选）
     - rss                                 # 3️⃣ RSS 订阅区域
     - standalone                          # 4️⃣ 独立展示区
-    - ai_analysis                         # 5️⃣ AI 分析区域
 
   # 推送区域开关
   # 控制各区域是否启用（配合 region_order 使用）
@@ -380,7 +380,7 @@ display:
   standalone:
     platforms: ["zhihu", "wallstreetcn-hot"]     # 热榜平台 ID 列表（如 ["zhihu", "weibo"]）
     rss_feeds: []                     # RSS 源 ID 列表（如 ["hacker-news"]）
-    max_items: 20                     # 每个源最多展示条数（0=不限制）
+    max_items: 10                     # 每个源最多展示条数（0=不限制）
 
 
 # ===============================================================
