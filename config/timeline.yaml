@@ -113,7 +113,7 @@ presets:
   # 不划分时间段，全天使用同一套配置。
   # 适合：重度用户、实时舆情监控
   #
-  # 全天：推送 ✓ | AI分析 ✗ | 不限推送次数
+  # 全天：推送 ✓ | AI分析 ✓ | 不限推送次数
   # ───────────────────────────────────────────────────────────
   always_on:
     name: "全天监控"
@@ -123,7 +123,7 @@ presets:
     # 因为这个模式没有划分时间段，所以 default 就是全天的行为
     default:
       collect: true                # 采集数据（爬取热榜 + RSS）
-      analyze: false               # 不做 AI 分析（节省 API 费用）
+      analyze: true                # AI 分析当前榜单
       ai_mode: "current"           # AI 分析当前榜单
       push: true                   # 有新内容就推送
       report_mode: "incremental"   # 只推送新增内容，避免重复
@@ -218,7 +218,7 @@ presets:
   # 到岗速览：推送 ✓ | AI分析 ✓ | 只推一次
   # 午间热点：推送 ✓ | AI分析 ✗ | 只推一次
   # 收工汇总：推送 ✓ | AI分析 ✓ | 只推一次
-  # 周末自由：推送 ✓ | AI分析 ✗ | 不限推送次数
+  # 周末自由：推送 ✓ | AI分析 ✓ | 不限推送次数
   # ───────────────────────────────────────────────────────────
   office_hours:
     name: "办公时间"
@@ -268,6 +268,7 @@ presets:
         name: "周末自由"
         start: "08:00"
         end: "23:00"
+        analyze: true              # AI 分析当前热点
         ai_mode: "current"         # AI 分析当前榜单
         push: true                 # 有新增就推送
         report_mode: "incremental" # 增量模式：有新增才推，没有就安静
@@ -477,6 +478,8 @@ custom:
       # frequency_file: "xxx.txt"               # 关键词文件（可选，位于 config/custom/keyword/）
       # interests_file: "xxx.txt"                # AI 兴趣文件（可选，位于 config/custom/ai/）
       # filter_method: "keyword"                # 筛选策略（可选: keyword | ai，不填用全局 filter.method）
+      analyze: true                # AI 分析当前热点
+      ai_mode: "current"           # AI 分析当前榜单
       push: true                   # 早上推送一次
       report_mode: "incremental"   # 只推新增内容
       # once 继承 default（push: true）→ 窗口内只推一次
