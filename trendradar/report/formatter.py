@@ -45,11 +45,14 @@ def format_title_for_platform(
         格式化后的标题字符串
     """
     rank_display = format_rank_display(
-        title_data["ranks"], title_data["rank_threshold"], platform
+        title_data["ranks"], title_data["rank_threshold"], platform,
+        rank_timeline=title_data.get("rank_timeline"),
     )
 
     link_url = title_data["mobile_url"] or title_data["url"]
     cleaned_title = clean_title(title_data["title"])
+    if not cleaned_title:
+        cleaned_title = link_url or title_data["url"] or ""
 
     # 获取关键词标签（platform 模式使用）
     keyword = title_data.get("matched_keyword", "") if show_keyword else ""
@@ -194,7 +197,8 @@ def format_title_for_platform(
 
         # 排名（使用 * 加粗）
         rank_display = format_rank_display(
-            title_data["ranks"], title_data["rank_threshold"], "slack"
+            title_data["ranks"], title_data["rank_threshold"], "slack",
+            rank_timeline=title_data.get("rank_timeline"),
         )
         if rank_display:
             result += f" {rank_display}"
@@ -207,7 +211,8 @@ def format_title_for_platform(
 
     elif platform == "html":
         rank_display = format_rank_display(
-            title_data["ranks"], title_data["rank_threshold"], "html"
+            title_data["ranks"], title_data["rank_threshold"], "html",
+            rank_timeline=title_data.get("rank_timeline"),
         )
 
         link_url = title_data["mobile_url"] or title_data["url"]
