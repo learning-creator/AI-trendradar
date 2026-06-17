@@ -17,7 +17,7 @@ app:
   #   - America/New_York (美东时间 UTC-5/-4)
   #   - Europe/London (伦敦时间 UTC+0/+1)
   # 完整时区列表: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  timezone: "Asia/Shanghai"
+  timezone: "Asia/Shangh"
   show_version_update: true           # 是否显示版本更新提示（true=显示, false=隐藏）
 
 
@@ -226,11 +226,11 @@ display:
   # 调整顺序：剪切粘贴整行即可
   # 要显示某个区域，需同时：1. 在此列表中  2. 下方 regions 对应开关为 true
   region_order:
+    - ai_analysis                         # 5️⃣ AI 分析区域
     - new_items                           # 1️⃣ 新增热点区域
     - hotlist                             # 2️⃣ 热榜区域（关键词匹配 / AI 智能筛选）
     - rss                                 # 3️⃣ RSS 订阅区域
     - standalone                          # 4️⃣ 独立展示区
-    - ai_analysis                         # 5️⃣ AI 分析区域
 
   # 推送区域开关（需配合上方 region_order 使用）
   regions:
