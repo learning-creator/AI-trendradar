@@ -21,7 +21,13 @@ from trendradar.storage import convert_crawl_results_to_news_data
 from trendradar.utils.time import DEFAULT_TIMEZONE, is_within_days, calculate_days_old
 from trendradar.ai import AIAnalyzer, AIAnalysisResult
 from trendradar.core.scheduler import ResolvedSchedule
-from trendradar.commands import check_all_versions, run_doctor, run_test_notification, handle_status_commands
+from trendradar.commands import (
+    check_all_versions,
+    run_doctor,
+    run_test_notification,
+    handle_status_commands,
+    run_trend_summary,
+)
 from trendradar.commands.version import _fetch_remote_version, _parse_version
 
 
@@ -1659,6 +1665,12 @@ def main():
     parser.add_argument("--doctor", action="store_true", help="运行环境与配置体检")
     parser.add_argument("--test-notification", action="store_true", help="发送测试通知到已配置渠道")
 
+    parser.add_argument(
+        "--trend-summary",
+        choices=["weekly", "monthly", "quarterly", "semiannual", "yearly"],
+        help="Generate an AI trend summary for the previous complete period",
+    )
+
     args = parser.parse_args()
 
     debug_mode = False
@@ -1677,6 +1689,12 @@ def main():
 
         if args.test_notification:
             ok = run_test_notification(config)
+            if not ok:
+                raise SystemExit(1)
+            return
+
+        if args.trend_summary:
+            ok = run_trend_summary(config, args.trend_summary)
             if not ok:
                 raise SystemExit(1)
             return

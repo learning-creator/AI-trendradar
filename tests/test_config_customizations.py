@@ -39,6 +39,42 @@ class ConfigCustomizationTest(unittest.TestCase):
         self.assertEqual(ai_translation.get("batch_size"), 100)
         self.assertEqual(ai_translation.get("batch_interval"), 2)
 
+    def test_western_rss_sources_are_added_without_removing_existing_feeds(self):
+        feed_ids = [
+            feed.get("id")
+            for feed in self.config.get("rss", {}).get("feeds", [])
+        ]
+
+        for existing_feed in ["hacker-news", "ruanyifeng", "yahoo-finance"]:
+            with self.subTest(existing_feed=existing_feed):
+                self.assertIn(existing_feed, feed_ids)
+
+        for source_id in [
+            "wsj-world",
+            "wsj-markets",
+            "ft-world",
+            "nyt-world",
+            "nyt-business",
+            "bbc-world",
+            "bbc-business",
+            "guardian-china",
+            "guardian-economics",
+            "npr-world",
+        ]:
+            with self.subTest(source_id=source_id):
+                self.assertIn(source_id, feed_ids)
+
+    def test_rss_is_included_in_ai_analysis(self):
+        ai_analysis = self.config.get("ai_analysis", {})
+        self.assertIs(ai_analysis.get("include_rss"), True)
+
+    def test_trend_summary_config_is_present(self):
+        trend_summary = self.config.get("trend_summary", {})
+        self.assertIs(trend_summary.get("enabled"), True)
+        self.assertIs(trend_summary.get("include_hotlist"), True)
+        self.assertIs(trend_summary.get("include_rss"), True)
+        self.assertEqual(trend_summary.get("prompt_file"), "trend_summary_prompt.txt")
+
     def test_timezone_is_valid_shanghai_timezone(self):
         self.assertEqual(self.config.get("app", {}).get("timezone"), "Asia/Shanghai")
 

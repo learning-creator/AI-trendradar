@@ -131,6 +131,57 @@ rss:
       name: "雅虎财经"
       url: "https://finance.yahoo.com/news/rssindex"
 
+    # Western authoritative media (official RSS/API-style feeds; no paywall bypass)
+    - id: "wsj-world"
+      name: "WSJ World News"
+      url: "https://feeds.a.dj.com/rss/RSSWorldNews.xml"
+      max_age_days: 3
+
+    - id: "wsj-markets"
+      name: "WSJ Markets"
+      url: "https://feeds.a.dj.com/rss/RSSMarketsMain.xml"
+      max_age_days: 3
+
+    - id: "ft-world"
+      name: "Financial Times"
+      url: "https://www.ft.com/news-feed?format=rss"
+      max_age_days: 3
+
+    - id: "nyt-world"
+      name: "New York Times World"
+      url: "https://rss.nytimes.com/services/xml/rss/nyt/World.xml"
+      max_age_days: 3
+
+    - id: "nyt-business"
+      name: "New York Times Business"
+      url: "https://rss.nytimes.com/services/xml/rss/nyt/Business.xml"
+      max_age_days: 3
+
+    - id: "bbc-world"
+      name: "BBC World"
+      url: "https://feeds.bbci.co.uk/news/world/rss.xml"
+      max_age_days: 3
+
+    - id: "bbc-business"
+      name: "BBC Business"
+      url: "https://feeds.bbci.co.uk/news/business/rss.xml"
+      max_age_days: 3
+
+    - id: "guardian-china"
+      name: "The Guardian China"
+      url: "https://www.theguardian.com/world/china/rss"
+      max_age_days: 3
+
+    - id: "guardian-economics"
+      name: "The Guardian Economics"
+      url: "https://www.theguardian.com/business/economics/rss"
+      max_age_days: 3
+
+    - id: "npr-world"
+      name: "NPR World"
+      url: "https://feeds.npr.org/1004/rss.xml"
+      max_age_days: 3
+
     # 自定义源示例
     # - id: "custom-feed"
     #   name: "自定义源"
@@ -414,7 +465,7 @@ ai_analysis:
   max_news_for_analysis: 150        # 参与分析的新闻数量上限（控制 token 成本的关键项）
                                     # 热榜优先占用配额，RSS 用剩余配额，独立展示区不受此限制
 
-  include_rss: false                # 是否包含 RSS 内容进行分析（true=包含, false=不包含）
+  include_rss: true                 # 是否包含 RSS 内容进行分析（true=包含, false=不包含）
   include_standalone: true          # 是否纳入独立展示区数据（true=纳入, false=不纳入）
 
   include_rank_timeline: true       # 排名时间线详细程度
@@ -442,6 +493,27 @@ ai_translation:
     hotlist: false                  # 翻译热榜标题（true=翻译, false=不翻译）
     rss: true                       # 翻译 RSS 标题（true=翻译, false=不翻译）
     standalone: true                # 翻译独立展示区标题（true=翻译, false=不翻译）
+
+
+# ===============================================================
+# 10.5 Periodic AI trend summaries
+# ===============================================================
+trend_summary:
+  enabled: true
+  periods:
+    weekly: true
+    monthly: true
+    quarterly: true
+    semiannual: true
+    yearly: true
+  language: "Chinese"
+  prompt_file: "trend_summary_prompt.txt"
+  max_items: 300
+  include_hotlist: true
+  include_rss: true
+  save_markdown: true
+  save_html: true
+  push: true
 
 
 # ===============================================================
