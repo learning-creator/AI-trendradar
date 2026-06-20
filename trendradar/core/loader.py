@@ -301,6 +301,31 @@ def _load_ai_analysis_config(config_data: Dict) -> Dict:
     }
 
 
+def _load_trend_summary_config(config_data: Dict) -> Dict:
+    """加载周期趋势总结配置"""
+    summary = config_data.get("trend_summary", {})
+    periods = summary.get("periods", {})
+
+    return {
+        "ENABLED": summary.get("enabled", True),
+        "PERIODS": {
+            "WEEKLY": periods.get("weekly", True),
+            "MONTHLY": periods.get("monthly", True),
+            "QUARTERLY": periods.get("quarterly", True),
+            "SEMIANNUAL": periods.get("semiannual", True),
+            "YEARLY": periods.get("yearly", True),
+        },
+        "LANGUAGE": summary.get("language", "Chinese"),
+        "PROMPT_FILE": summary.get("prompt_file", "trend_summary_prompt.txt"),
+        "MAX_ITEMS": int(summary.get("max_items", 300) or 300),
+        "INCLUDE_HOTLIST": summary.get("include_hotlist", True),
+        "INCLUDE_RSS": summary.get("include_rss", True),
+        "SAVE_MARKDOWN": summary.get("save_markdown", True),
+        "SAVE_HTML": summary.get("save_html", True),
+        "PUSH": summary.get("push", True),
+    }
+
+
 def _load_ai_translation_config(config_data: Dict) -> Dict:
     """加载 AI 翻译配置（功能配置，模型配置见 _load_ai_config）"""
     trans_config = config_data.get("ai_translation", {})
@@ -587,6 +612,9 @@ def load_config(config_path: Optional[str] = None) -> Dict[str, Any]:
 
     # AI 分析配置
     config["AI_ANALYSIS"] = _load_ai_analysis_config(config_data)
+
+    # 周期趋势总结配置
+    config["TREND_SUMMARY"] = _load_trend_summary_config(config_data)
 
     # AI 翻译配置
     config["AI_TRANSLATION"] = _load_ai_translation_config(config_data)
